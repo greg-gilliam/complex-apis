@@ -67,9 +67,7 @@ describe('complex-apis routes', () => {
       email: 'a@aaa.com',
       pwd: '1234',
     });
-    const res = await (
-      await request(app).post('/api/auth/login')
-    ).send({
+    const res = await request(app).post('/api/auth/login').send({
       email: 'a@abc.com',
       pwd: '6789',
     });
