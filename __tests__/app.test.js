@@ -39,7 +39,7 @@ describe('complex-apis routes', () => {
     });
   });
 
-  xit('should GET a user by id', () => {
+  it('should GET a user by id', () => {
     return request(app)
       .get('/api/users/1')
       .then((res) => {
