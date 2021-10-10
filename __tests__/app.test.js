@@ -38,4 +38,41 @@ describe('complex-apis routes', () => {
       email: 'a@aaa.com',
     });
   });
+
+  xit('should GET a user by id', () => {
+    return request(app)
+      .get('/api/users/1')
+      .then((res) => {
+        expect(res.body).toEqual({
+          id: '1',
+          email: 'a@aaa.com',
+        });
+      });
+  });
+
+  it('should throw a 400 error if email already exists', async () => {
+    await UserService.create({
+      email: 'a@aaa.com',
+      pwd: '1234',
+    });
+    const res = await request(app).post('/api/auth/signup').send({
+      email: 'a@aaa.com',
+      pwd: '1234',
+    });
+    expect(res.status).toEqual(400);
+  });
+
+  it('should throw a 401 error if user inputs invalid credentials', async () => {
+    await UserService.create({
+      email: 'a@aaa.com',
+      pwd: '1234',
+    });
+    const res = await (
+      await request(app).post('/api/auth/login')
+    ).send({
+      email: 'a@abc.com',
+      pwd: '6789',
+    });
+    expect(res.status).toEqual(401);
+  });
 });
