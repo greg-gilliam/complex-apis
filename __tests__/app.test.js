@@ -73,4 +73,16 @@ describe('complex-apis routes', () => {
     });
     expect(res.status).toEqual(401);
   });
+
+  it('returns currently logged in user', async () => {
+    await UserService.create({
+      email: 'a@aaa.com',
+      pwd: '1234',
+    });
+    const agent = await request.agent(app);
+    await agent.post('/api/auth/me');
+
+    const res = await agent.get('/api/auth/me');
+    expect(res.body).toEqual({ id: '1', email: 'a@aaa.com' });
+  });
 });
