@@ -5,7 +5,9 @@ DROP TABLE IF EXISTS roles;
 CREATE TABLE users (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
-    pwd_hash TEXT NOT NULL
+    pwd_hash TEXT NOT NULL,
+    role_id BIGINT NOT NULL,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
 CREATE TABLE tweets (
